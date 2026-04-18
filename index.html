@@ -516,9 +516,7 @@
     const WALLPAPERS = [
       { n:'01', name:'Liquid Metal',    desc:'Raymarched chrome globules orbit the cursor, melting into a mirrored pool. Clicks drop a new droplet that ripples across the surface.', cls:'t1', sid:'shader-1' },
       { n:'02', name:'Aurora Field',    desc:'Polar curtains of plasma sway in a warped noise field and bend toward your cursor. Clicks send a soft luminescent ring across the sky.', cls:'t2', sid:'shader-2' },
-      { n:'03', name:'Starfield Drift', desc:'Three parallax star layers drift through a violet nebula. The cursor acts as a gravitational lens; clicks spark supernovae.',         cls:'t3', sid:'shader-3' },
-      { n:'04', name:'Crystal Lattice', desc:'Iridescent voronoi glass tiles refract around the cursor. Clicks shatter a region with a shockwave of bevelled edges.',                 cls:'t4', sid:'shader-4' },
-      { n:'05', name:'Neon Waves',      desc:'A chromatically-aberrated sine grid warps toward the cursor over hot magenta and cyan. Clicks ping a concentric shockwave.',            cls:'t5', sid:'shader-5' },
+      { n:'03', name:'Starfield Drift', desc:'Three parallax star layers drift through a violet nebula. The cursor acts as a gravitational lens; clicks spark supernovae.',         cls:'t3', sid:'shader-3' }
     ];
 
     // Build dock
@@ -624,7 +622,7 @@
     window.addEventListener('pointerdown', registerClick);
 
     // Switch wallpaper
-    let currentIdx = parseInt(localStorage.getItem('sw_idx') || '4', 10);
+    let currentIdx = parseInt(localStorage.getItem('sw_idx') || '0', 10);
     if(isNaN(currentIdx) || currentIdx<0 || currentIdx>=WALLPAPERS.length) currentIdx = 0;
 
     const tiles = dock.querySelectorAll('.tile');
@@ -640,11 +638,23 @@
     }
     tiles.forEach((t, i)=> t.addEventListener('click', ()=> setIdx(i)));
     window.addEventListener('keydown', (e)=>{
-      if(e.key>='1' && e.key<='5'){ setIdx(parseInt(e.key,10)-1); }
+      if(e.key>='1' && e.key<='3'){ setIdx(parseInt(e.key,10)-1); }
       else if(e.key==='ArrowRight'){ setIdx(currentIdx+1); }
       else if(e.key==='ArrowLeft'){ setIdx(currentIdx-1); }
     });
+    
     setIdx(currentIdx);
+
+    let cycleInterval = setInterval(() => {
+      setIdx(currentIdx + 1);
+    }, 60000);
+
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('a') || e.target.closest('button') || e.target.closest('.tile')) {
+        clearInterval(cycleInterval);
+      }
+    });
+
 
     // Clock
     
