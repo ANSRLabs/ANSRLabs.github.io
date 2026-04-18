@@ -12,8 +12,7 @@
 
 body {
   margin: 0;
-  background-color: var(--bg-dark);
-  
+  background-color: transparent;
   color: var(--text-main);
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
@@ -33,6 +32,7 @@ body {
   flex-direction: column;
   gap: 3rem;
 }
+
 
 .header {
   text-align: center;
@@ -176,7 +176,7 @@ canvas#stage {
   width: 100vw;
   height: 100vh;
   display: block;
-  z-index: 0;
+  z-index: -1;
   background: #050a15;
   cursor: crosshair;
 }
