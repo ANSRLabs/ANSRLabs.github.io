@@ -13,10 +13,7 @@
 body {
   margin: 0;
   background-color: var(--bg-dark);
-  background-image: 
-    linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
-  background-size: 30px 30px;
+  
   color: var(--text-main);
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
@@ -25,6 +22,10 @@ body {
 }
 
 .cyber-container {
+  position: relative;
+  z-index: 10;
+  pointer-events: none; /* Let clicks pass through to canvas */
+
   width: 100%;
   max-width: 1200px;
   padding: 2rem;
@@ -165,4 +166,38 @@ body {
   .glitch {
     font-size: 2.5rem;
   }
+}
+
+.cyber-btn, .tile { pointer-events: auto; }
+
+canvas#stage {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  z-index: 0;
+  background: #050a15;
+  cursor: crosshair;
+}
+
+/* Dock Styles */
+.dock{ position:fixed; left:50%; bottom:22px; transform:translateX(-50%); z-index:20; display:flex; gap:10px; padding:10px; background:rgba(12,14,18,.55); border:1px solid rgba(0, 240, 255, 0.3); border-radius:18px; backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%); box-shadow: 0 10px 40px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.06); }
+.tile{ position:relative; width:76px; height:56px; border-radius:10px; overflow:hidden; cursor:pointer; border:1px solid transparent; background:#111; transition: transform .2s ease, border-color .2s ease; }
+.tile::after{ content:""; position:absolute; inset:0; border-radius:inherit; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); pointer-events:none; }
+.tile .num{ position:absolute; top:5px; left:6px; font-family:'Share Tech Mono', monospace; font-size:9px; letter-spacing:.2em; color:rgba(255,255,255,.7); text-shadow:0 1px 2px rgba(0,0,0,.6); z-index: 2; }
+.tile .name{ position:absolute; bottom:5px; left:6px; right:6px; font-family:'Share Tech Mono', monospace; font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.85); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-shadow:0 1px 2px rgba(0,0,0,.7); z-index: 2; }
+.tile:hover{ transform: translateY(-2px); }
+.tile.active{ border-color: var(--neon-cyan); box-shadow: 0 0 0 2px rgba(0,240,255,.22); }
+.tile .thumb{ position:absolute; inset:0; z-index: 1; }
+
+.t1{ background: radial-gradient(60% 60% at 30% 40%, #d8d8de 0%, #6f7380 40%, #1a1c22 80%), #0a0c10; }
+.t2{ background: linear-gradient(135deg, #0a1422 0%, #174054 40%, #1f8a6a 70%, #b0e05a 100%); }
+.t3{ background: radial-gradient(120% 80% at 50% 55%, #3a2560 0%, #0a0a18 60%, #000 100%); }
+.t4{ background: conic-gradient(from 200deg at 50% 50%, #7bd7ff, #b6b0ff, #ffb5e0, #7bd7ff); filter: saturate(.8); }
+.t5{ background: repeating-linear-gradient(115deg, #ff2bd4 0 2px, transparent 2px 8px), repeating-linear-gradient(65deg, #00e5ff 0 2px, transparent 2px 8px), #0a0818; }
+
+@media (max-width: 720px){
+  .tile{ width:60px; height:46px; }
+  .dock { bottom: 10px; }
 }
