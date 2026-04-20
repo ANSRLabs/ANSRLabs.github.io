@@ -574,10 +574,10 @@
       };
     }
 
-    // Fullscreen triangle
+    // Fullscreen quad
     const buf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 4,-1, -1,4]), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
     gl.enableVertexAttribArray(0);
     gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
 
@@ -704,7 +704,7 @@
         gl.uniform2f(pr.uMN, mouse.nx, mouse.ny);
         gl.uniform2f(pr.uMS, mouse.sx, mouse.sy);
         gl.uniform4fv(pr.uClicks, clickBuf);
-        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
       }
 
       frames++;
